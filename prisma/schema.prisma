@@ -1,0 +1,22 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Employee {
+  cpf         String   @id @unique
+  name        String
+  birthYear   String
+  Company     Company? @relation(fields: [companyCnpj], references: [cnpj])
+  companyCnpj String?
+}
+
+model Company {
+  cnpj      String     @id
+  name      String
+  employees Employee[]
+}
